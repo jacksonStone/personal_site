@@ -1,10 +1,13 @@
 package main
 
 import (
-	"fmt"
+	"embed"
 	"log"
 	"net/http"
 )
+
+//go:embed public
+var content embed.FS
 
 func main() {
 
@@ -18,5 +21,12 @@ func main() {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to my personal site!")
+	data, err := content.ReadFile("public/about.html")
+	if err != nil {
+		http.Error(w, "Could not read embedded file", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	w.Write(data)
 }

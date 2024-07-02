@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Step 0: Build the HTML Files from MD
+cd personal_site_builder && go run build_markdown.go ../entries ../personal_site_server/public
+echo "Built HTML files from MD"
+
+cd ../personal_site_server
+
 # Step 1: Build the Go binary
 echo "Building Go binary..."
 GOOS=linux GOARCH=amd64 go build  -o personal_site ./server.go|| { echo "Go build failed"; exit 1; }
