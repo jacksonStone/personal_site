@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"unicode"
 
 	"github.com/gomarkdown/markdown"
 )
@@ -48,8 +49,9 @@ func main() {
 			if err != nil {
 				return err
 			}
-
-			outputPath := filepath.Join(outputDir, strings.TrimSuffix(relPath, ".md")+".html")
+			title := strings.TrimSuffix(relPath, ".md")
+			formattedTitle := toTitleCase(strings.Join(strings.Split(title, "-"), " "))
+			outputPath := filepath.Join(outputDir, title+".html")
 
 			htmlContent, err := convertMarkdownToHTML(path)
 			if err != nil {
@@ -57,7 +59,7 @@ func main() {
 				return err
 			}
 			pageData := PageData{
-				Title: strings.TrimSuffix(info.Name(), ".md"),
+				Title: formattedTitle,
 				// Covert htmlContent to template.HTML to prevent escaping
 				Content: template.HTML(htmlContent),
 				Style:   template.CSS(style)}
@@ -98,4 +100,19 @@ func convertMarkdownToHTML(inputPath string) ([]byte, error) {
 
 	htmlContent := markdown.ToHTML(mdContent, nil, nil)
 	return htmlContent, nil
+}
+func toTitleCase(s string) string {
+	words := strings.Fields(s)
+	for i, word := range words {
+		runes := []rune(word)
+		for j := range runes {
+			if j == 0 {
+				runes[j] = unicode.ToUpper(runes[j])
+			} else {
+				runes[j] = unicode.ToLower(runes[j])
+			}
+		}
+		words[i] = string(runes)
+	}
+	return strings.Join(words, " ")
 }
