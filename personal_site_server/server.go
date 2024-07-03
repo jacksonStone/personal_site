@@ -4,6 +4,7 @@ import (
 	"embed"
 	"log"
 	"net/http"
+	"strings"
 )
 
 //go:embed public
@@ -20,13 +21,23 @@ func main() {
 	}
 }
 
-func rootHandler(w http.ResponseWriter, r *http.Request) {
-	data, err := content.ReadFile("public/about.html")
+func returnStaticHTML(w http.ResponseWriter, path string) {
+	data, err := content.ReadFile(path)
 	if err != nil {
-		http.Error(w, "Could not read embedded file", http.StatusInternalServerError)
+		http.Error(w, "Invalid Path: This page does not exist.", http.StatusNotFound)
 		return
 	}
 
 	w.Header().Set("Content-Type", "text/html")
 	w.Write(data)
+}
+
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path == "/" {
+		returnStaticHTML(w, "public/about.html")
+	} else {
+		path := r.URL.Path[1:]
+		firstPartOfPath := strings.Split(path, "/")[0]
+		returnStaticHTML(w, "public/"+firstPartOfPath+".html")
+	}
 }
