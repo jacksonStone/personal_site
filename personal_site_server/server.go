@@ -4,6 +4,7 @@ import (
 	"embed"
 	"log"
 	"net/http"
+	"path/filepath"
 	"strings"
 )
 
@@ -38,6 +39,20 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		path := r.URL.Path[1:]
 		firstPartOfPath := strings.Split(path, "/")[0]
-		returnStaticHTML(w, "public/"+firstPartOfPath+".html")
+		if firstPartOfPath == "favicon.ico" {
+			// todo return favicon file
+			data, err := content.ReadFile(filepath.Join("public", "favicon.ico"))
+			if err != nil {
+				http.Error(w, "Not Found", http.StatusNotFound)
+			}
+			w.Header().Set("Content-Type", "image/x-icon")
+			w.Write(data)
+			return
+		}
+		if firstPartOfPath == ".." || firstPartOfPath == "." {
+			http.Error(w, "Invalid Path: Nice Try! No Monkey business!", http.StatusNotFound)
+			return
+		}
+		returnStaticHTML(w, filepath.Join("public", firstPartOfPath+".html"))
 	}
 }
