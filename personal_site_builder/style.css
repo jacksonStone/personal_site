@@ -2,19 +2,46 @@ body {
     background-color: black;
     color: white;
     font-family: "Courier New", Courier, monospace;
-    padding: 20px; /* Adds padding around the edges */
+    margin: 0; /* Removes default margin */
 }
 
 a {
-    color: #00FF00; /* Bright green for links */
+    color: #32CD32; /* Bright green for links */
     font-weight: bold; /* Bold text */
+    text-decoration: none; /* Removes underline from links */
+}
+
+a:hover {
+    color: #00FF00; /* Lighter green for hover effect */
+    transition: color 0.3s; /* Smooth transition for color change */
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: bold; /* Bold text */
 }
 
-/* Additional padding for other elements */
-div, section, article {
-    padding: 20px;
+nav {
+    background-color: #222;
+    padding: 10px 0;
+    position: fixed; /* Keeps the navigation bar fixed at the top */
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures the navigation bar is always on top */
+}
+
+nav ul {
+    list-style-type: none; /* Removes bullets */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centers the navigation items */
+}
+
+nav ul li {
+    margin: 0 15px; /* Adds space between navigation items */
+}
+
+main {
+    margin-top: 20px; /* Adjusted to accommodate fixed nav bar */
+    padding: 40px;
 }
