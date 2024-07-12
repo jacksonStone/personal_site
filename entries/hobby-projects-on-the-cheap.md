@@ -1,53 +1,55 @@
-***How I host this, and all my hobby projects on the cheap***
+# How I Host This, and All My Hobby Projects on the Cheap
 
-**The Problem**
+## The Problem
 
-I am, at my professional core, a full stack developer. I love the satisfaction that comes from starting with a blank text file and ending with an end to end experience. This means if I do a hobby project, it's generally a website of some kind hosted on the World Wide Web. However, If you are anything like me, your hobby projects suffer from a similar fate. Hobby project costs X dollars a month to keep running, but you work on them in bursts - sometimes spaced out by years. Every month when the AWS/Heroku/whatever bill rolls in, it is a time to think "Do I really want to pay this fee to keep this toy thing running?" This has lead to me canceling many previous sites, which subsequently leads to me letting a domain name roll. (Which I always regret eventually)
+I am, at my professional core, a full stack developer. I love the satisfaction that comes from starting with a blank text file and ending with an end-to-end experience. This means if I do a hobby project, it's generally a website of some kind hosted on the World Wide Web. However, if you are anything like me, your hobby projects suffer from a similar fate:
 
-This has long plagued me. In addition to leading to an early fate for my hard work, it keeps me from starting otherwise fun and fruitful projects that would have been nice learning experiences and tiny contributors to my overall portfolio. The thought pattern works something like this: "I will cancel it in a month and will have nothing to show but Github links for it. Might as well not start." It's not that I don't enjoy programming for it's own sake, but the forgone conclusion I won't have a work to show at the end is sufficiently discouraging to prevent me getting started. An analogy might be if you were a prolific wood craftsperson but knew at the end you were going to chuck it into the fire. Part of the joy is being able to look back at your creation even if you love the craft for its own sake.
+- Hobby project costs X dollars a month to keep running
+- You work on them in bursts - sometimes spaced out by years
+- Every month when the AWS/Heroku/whatever bill rolls in, it's time to think: "Do I really want to pay this fee to keep this toy thing running?"
 
-Additionally if a wood craftsperson were in a position where they would have to pay 10-20 bucks a month to let the craft live in their house, they too would be tempted every so often to get ride of it. If we are developing sites for fun, that has this unfortunate effect. It isn't even the money sums are large or that consequential. It's simply knowing there is a slow drip and a constant cost/benefit analysis being made.
+This has led to me canceling many previous sites, which subsequently leads to letting a domain name expire. (Which I always regret eventually)
 
-I had to come up with a new way. I wanted to keep up the projects, but not feel pressured to throw them away. And if I could avoid that spiral, I think it would lead to more hacking tendencies that I think have been key to my career success thus far. (Keeping skills sharp, passion alive for the craft, etc.)  
+This has long plagued me. In addition to leading to an early fate for my hard work, it keeps me from starting otherwise fun and fruitful projects that would have been nice learning experiences and tiny contributors to my overall portfolio. The thought pattern works something like this:
 
-**Tech**
+> "I will cancel it in a month and will have nothing to show but Github links for it. Might as well not start."
+
+It's not that I don't enjoy programming for its own sake, but the foregone conclusion I won't have a work to show at the end is sufficiently discouraging to prevent me from getting started. An analogy might be if you were a prolific wood craftsperson but knew at the end you were going to chuck it into the fire. Part of the joy is being able to look back at your creation even if you love the craft for its own sake.
+
+Additionally, if a wood craftsperson were in a position where they would have to pay 10-20 bucks a month to let the craft live in their house, they too would be tempted every so often to get rid of it. If we are developing sites for fun, that has this unfortunate effect. It isn't even that the money sums are large or consequential. It's simply knowing there is a slow drip and a constant cost/benefit analysis being made.
+
+I had to come up with a new way. I wanted to keep up the projects, but not feel pressured to throw them away. And if I could avoid that spiral, I think it would lead to more hacking tendencies that I think have been key to my career success thus far. (Keeping skills sharp, passion alive for the craft, etc.)
+
+## Tech
 
 The general solution I've discovered for this problem is the following:
 
-1. Host everything on one small server with a static IP address. (In my specific case I reserved 3 years of a t3.small EC2 for about a 50% discount. It averages about 7$ a month amortized out.) This server is more than enough for hobby projects which get visitors in the low double digits monthly if I am honest with myself. :D
-
-2. Point all domains for all projects to this one static IP address
-
+1. Host everything on one small server with a static IP address. (In my specific case I reserved 3 years of a t3.small EC2 for about a 50% discount. It averages about $7 a month amortized out.) This server is more than enough for hobby projects which get visitors in the low double digits monthly if I am honest with myself. :D
+2. Point all domains for all projects to this one static IP address.
 3. Use a small reverse proxy server running on the box ([around 100 lines of Go](https://github.com/jacksonStone/little_reverse_proxy/blob/main/server.go)) that handles HTTPS resolution and redirects traffic to a local host port based on the domain name. (Can't have my hobby projects on HTTP like a savage! If you show up at one of my sites - you're getting your data encrypted!) It zips along and uses basically no system resources as opposed to some more fully featured alternatives.
-
 4. Configure autocert on the box for each domain to handle SSL Cert rotation, which also restarts the proxy when there is a new cert. (HTTPS will then "Just work" and I won't have a broken site once every year or so... I want these hobby projects to last decades.)
-
-5. Spin up each hobby project on it's own localhost port on this box (which the reverse proxy knows to point to)
-
-6. In each side project, build a deploy.sh script (like the one for [this site](https://github.com/jacksonStone/personal_site/blob/main/deploy.sh)) that with one command - will handle transferring files to the server (before or after building locally depending on the tech stack) and restart the service
-
+5. Spin up each hobby project on its own localhost port on this box (which the reverse proxy knows to point to).
+6. In each side project, build a deploy.sh script (like the one for [this site](https://github.com/jacksonStone/personal_site/blob/main/deploy.sh)) that with one command - will handle transferring files to the server (before or after building locally depending on the tech stack) and restart the service.
 7. Create simple .service files on the ubuntu box to run the executables on startup/reboot/whatever so even if something happens in the Data center holding my service and AWS needs to rotate it - I'll still be sitting pretty.
 
-_As an aside: You know who says treat servers like cattle? Those who sell you servers..._
+> *As an aside: You know who says treat servers like cattle? Those who sell you servers...*
 
-**Cost**
+## Cost
 
 In total my hosting costs for all of this is broken down as follows:
 
-1. EC2 T3.Small running Ubuntu: about 7$ month with a 3 year reservation
-
-2. One "Elastic IP" assigned to this box (An IPV4 address): about 5$ a month (crazy that it is as costly as the server, but there you go...)
-
-3. Free tier MongoDB for the NoSQL apps (0$... for now at least)
-
-4. SQLite instances for SQL related side projects on the ubuntu box (0.08GB/Month of EBS - Essentially 0$ a month)
-
-5. The domain names renewal costs (varies depending on the Top Level Domain (.com/.info/.whatever)) Maybe anywhere from 3-5$ a month - paid about once a year, plus 50 cents/month per hosted zone in AWS
+1. EC2 T3.Small running Ubuntu: about $7/month with a 3-year reservation
+2. One "Elastic IP" assigned to this box (An IPV4 address): about $5/month (crazy that it is as costly as the server, but there you go...)
+3. Free tier MongoDB for the NoSQL apps ($0... for now at least)
+4. SQLite instances for SQL related side projects on the ubuntu box (0.08GB/Month of EBS - Essentially $0/month)
+5. The domain names renewal costs (varies depending on the Top Level Domain (.com/.info/.whatever))
+   - Maybe anywhere from $3-5/month - paid about once a year
+   - Plus $0.50/month per hosted zone in AWS
   
-With all this put together the majority of the expense then is the once a year cost of the domain names, not the actual server, etc. Each new side project in effect only adds the cost of its own domain name. There is essentially no incremental cost beyond that (so long as the project is not RAM hungry or something justifying a bigger box)
+With all this put together, the majority of the expense is the once-a-year cost of the domain names, not the actual server, etc. Each new side project in effect only adds the cost of its own domain name. There is essentially no incremental cost beyond that (so long as the project is not RAM hungry or something justifying a bigger box).
 
-Its laughable how much time I spent getting this cost down to as low as I did.  (maybe 4-5 days though to be fair it was while on Baby leave in between diaper changes for my third baby) But as mentioned earlier - it's not really about the money, but the constant temptation to turn down the hobby sites due to ongoing expense. I wanted to minimize incremental cost for a project and essentially become my own tiny cloud provide ensuring my hobby projects could have a long and happy life on the shelf.  
+It's laughable how much time I spent getting this cost down to as low as I did. (Maybe 4-5 days, though to be fair it was while on Baby leave in between diaper changes for my third baby) But as mentioned earlier - it's not really about the money, but the constant temptation to turn down the hobby sites due to ongoing expense. I wanted to minimize incremental cost for a project and essentially become my own tiny cloud provider ensuring my hobby projects could have a long and happy life on the shelf.
 
-At present of writing this post I am hosting four services on this one box I've configured (NodeJS full stack apps and Go apps) and I'm hovering at about 20% memory utilization in RAM and CPU utilization percentage is low single digits. So plenty of headroom for something like 10 more services. Additionally - it's easier for me to stomach the cost of hosting a single server because the question is now "Do I want to host anything?" rather than little hobby site X or Y. This is more similar for a wood craftsperson paying for their tools every couple years, rather than paying for each piece of wood working they have in their house. Easy choice.
+At present of writing this post, I am hosting four services on this one box I've configured (NodeJS full stack apps and Go apps) and I'm hovering at about 20% memory utilization in RAM and CPU utilization percentage is low single digits. So plenty of headroom for something like 10 more services. Additionally - it's easier for me to stomach the cost of hosting a single server because the question is now "Do I want to host anything?" rather than little hobby site X or Y. This is more similar to a wood craftsperson paying for their tools every couple years, rather than paying for each piece of woodworking they have in their house. Easy choice.
 
 Anyway, maybe if you are like me you will find my musings useful. Let's go hack together some projects!
