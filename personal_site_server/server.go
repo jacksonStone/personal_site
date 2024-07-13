@@ -35,7 +35,7 @@ func returnStaticHTML(w http.ResponseWriter, path string) {
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
-		returnStaticHTML(w, "public/resume.html")
+		returnStaticHTML(w, "public/jackson-stone.html")
 	} else {
 		path := r.URL.Path[1:]
 		firstPartOfPath := strings.Split(path, "/")[0]
