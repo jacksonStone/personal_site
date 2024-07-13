@@ -79,9 +79,13 @@ I love the craft of software development and I am happy as a clam in an IDE, giv
 ### The University of Tennessee at Chattanooga | 2012 - 2016
 
 **B.S. in Computer Science – Scientific Application** | GPA: 3.9
+
 - Summa Cum Laude, Departmental Honors, Outstanding Senior Award
+
 - Brock Scholars Program Honor Student
+
 - TEDx Chattanooga 2014 speaker
+
 - Leadership roles: CompUTC Mobile Development (President), UHON Council, Recruitment Committee (Head)
 
 [verbose resume version](/verbose-resume)
