@@ -46,6 +46,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, "Not Found", http.StatusNotFound)
 			}
 			w.Header().Set("Content-Type", "image/x-icon")
+			w.Header().Set("Cache-Control", "public, max-age=31536000")
 			w.Write(data)
 			return
 		}

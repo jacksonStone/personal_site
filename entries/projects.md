@@ -8,6 +8,6 @@ For examples of my work, you can visit:
 
  - [iOS/Android Game: Color Locks](https://www.youtube.com/watch?v=fCmhH7DM1Ew): Though no longer listed on the Play Store or the App Store, this was a game I developed along with two peers in college. It was targeted at art students who need to develop a nack for color theory.
 
- - [From Scratch Sentiment detector](https://colab.research.google.com/drive/1r67LHDw6k28RbUohgdqeT8NszYBIV2ue?usp=sharing): Tiny model I made from scratch with Pytorch and how I collected and santized the data from synthetic data.
+ - [From Scratch Text-Sentiment ML Model](https://colab.research.google.com/drive/1r67LHDw6k28RbUohgdqeT8NszYBIV2ue?usp=sharing): Tiny model I made from scratch with Pytorch. Colab also includes the how I fetched the synthetic data
 
  - For details on how I self host all my hobby projects for less than 5$ a month per project and an example of my professional writing, you can check out [this post](/hobby-projects-on-the-cheap)
