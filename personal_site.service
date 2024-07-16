@@ -1,0 +1,11 @@
+[Unit]
+Description=PersonalSite
+After=network.target
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+ExecStart=/home/ubuntu/personal_site
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target
