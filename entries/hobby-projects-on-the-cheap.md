@@ -45,8 +45,22 @@ In total my hosting costs for all of this is broken down as follows:
 5. The domain names renewal costs (varies depending on the Top Level Domain (.com/.info/.whatever))
    - Maybe anywhere from $3-5/month - paid about once a year
    - Plus $0.50/month per hosted zone in AWS
-  
+
 With all this put together, the majority of the expense is the once-a-year cost of the domain names, not the actual server, etc. Each new side project in effect only adds the cost of its own domain name. There is essentially no incremental cost beyond that (so long as the project is not RAM hungry or something justifying a bigger box).
+
+## Performance
+
+Given the presumption we are dealing with hobby projects, the performance considerations do not really need to account for scaling beyond, at the high end, GBs. Considering I am not using a CDN, any visitor to my sites in mainland US is looking at about a 40ms round trip time. This ballpark is a combination of longest path between west coast and east coast as well as assuming optimal network cabling between those two destinations, given the speed of light.  This is acceptable for landing pages, etc. It assumes of course I don't do anything in my services to poopoo the performance, as everything will pay that 40ms cost. 
+
+Once on the box, the reverse proxy itself seems to take on the order of 0.5-1ms. (Given the amount of time it takes to reroute the request to the correct port on the box). I even do a small optimization of going [direct to 127.0.0.1 to avoid DNS resolution.](https://www.youtube.com/watch?v=Pfy4Q-uDV6I) Though the difference is not easily measured. 
+
+SQLite writes recrods and reads them on the order of 1-10ms since it never leaves the box. And MongoDB free tier seems to return a response anywhere from 100-500ms. (This is enough to frustrate me so I will likely migrate everything to SQLite in the future... I have also learned to distrust all "Free" tier services. Looking at you Heroku!) 
+
+After this, it boils down to whatever other computation I am doing in the services to massage or otherwise alter the payload. This is generally 1-10ms for most of my endpoints.
+
+In Summary, the majority of performance considerations for the sites are the time it takes physically for light to travel to my box and back. And if it uses MongoDB, to then have it go to Mongo and back. I can live with that. CDN, shme-DN.
+
+## Conclusion
 
 It's laughable how much time I spent getting this cost down to as low as I did. (Maybe 4-5 days, though to be fair it was while on Baby leave in between diaper changes for my third baby) But as mentioned earlier - it's not really about the money, but the constant temptation to turn down the hobby sites due to ongoing expense. I wanted to minimize incremental cost for a project and essentially become my own tiny cloud provider ensuring my hobby projects could have a long and happy life on the shelf.
 
