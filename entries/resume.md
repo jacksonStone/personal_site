@@ -1,7 +1,7 @@
 # Resume
 ## Summary
 
-I'm a Senior Software Engineer and Team Lead with a track record of delivering high-impact solutions from startups in garages to the world-wide Google.
+I'm a Staff Software Engineer with a track record of delivering high-impact solutions from startups in garages to the world-wide Google.
 
 I love the craft of software development and I am happy as a clam in an IDE, giving a tech talk, writing a design document or constructing a Lucid Chart Diagram.
 
