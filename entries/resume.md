@@ -21,11 +21,14 @@ I love the craft of software development and I am happy as a clam in an IDE, giv
 
 ### [Google - GCP](https://cloud.google.com/) | Nov 2021 - Present
 
-#### Senior Software Engineer and Team Lead | Nov 2023-Present
-- Spearheaded initiatives projected to save \$MMM-\$B annually in GCP operations
+#### Staff Software Engineer (L6) | April 2026 - Present
+- Continuing to lead high-impact infrastructure initiatives within Google Cloud Technical Infrastructure
+
+#### Senior Software Engineer and Team Lead | Nov 2023 - April 2026
+- Spearheaded initiatives projected to save $MMM-$B annually in GCP operations
 - Orchestrated cross-team collaboration across 12+ teams for cohesive design and execution
 
-#### Software Engineer Team Lead | Jan 2023-Nov 2023
+#### Software Engineer Team Lead | Jan 2023 - Nov 2023
 - Architected technical direction for integrating new ML Hardware into TI ecosystem
 - Led subteam while contributing to Java, Go, and Python codebases
 
