@@ -25,7 +25,7 @@ I love the craft of software development and I am happy as a clam in an IDE, giv
 - Continuing to lead high-impact infrastructure initiatives within Google Cloud Technical Infrastructure
 
 #### Senior Software Engineer and Team Lead | Nov 2023 - April 2026
-- Spearheaded initiatives projected to save $MMM-$B annually in GCP operations
+- Spearheaded initiatives projected to save \$MMM-\$B annually in GCP operations
 - Orchestrated cross-team collaboration across 12+ teams for cohesive design and execution
 
 #### Software Engineer Team Lead | Jan 2023 - Nov 2023
